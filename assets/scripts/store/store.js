@@ -1,12 +1,14 @@
-import { sidebar } from '../views/Components/Sidebar.js';
+import { actions } from '../actions/actions.js';
+import { createFragmentList } from '../helpers/helpers.js';
+import { episodieList } from '../views/Components/EpisodieList.js';
 import { renderView } from '../views/renderViews.js';
 
 export const store = {
-  state: { value: 0, status: 'home' },
+  state: { sidebar: { info: {}, listItem: [] }, status: 'home' },
   onAction: {
     showOrHideSideBar: function (action) {
       if (action.name === 'sideBar_show_or_hide') {
-        document.getElementById('sidebar').classList.toggle('none');
+        document.getElementById('navContent').classList.toggle('none');
         action.payload.classList.toggle('bx-x');
         action.payload.classList.toggle('bxs-chevron-right');
       }
@@ -19,10 +21,18 @@ export const store = {
     },
     init: function (action) {
       if (action.name === 'init') {
-        const template = document.createElement('template');
-        template.innerHTML += sidebar.template();
-        renderView(template.content);
-        sidebar.listen('add');
+        const { results, info } = action.payload;
+        store.state.sidebar.info = info;
+        store.state.sidebar.listItem = results;
+        console.log(createFragmentList(results, episodieList.template));
+        renderView(
+          createFragmentList(results, episodieList.template),
+          '#sidebar',
+        );
+        document
+          .getElementById('navController')
+          .addEventListener('click', actions.showOrHideSideBar);
+        episodieList.listen('add');
       }
     },
   },

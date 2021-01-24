@@ -7,10 +7,23 @@
   <title>Rick&Morty</title>
   <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <script src="/assets/scripts/index.js" type="module"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js" integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ==" crossorigin="anonymous"></script>
 </head>
 <body>
   <canvas id="canvas"></canvas>
   <div id="root" class="root">
+    <header class="header">
+      <img class="header__title" src="/assets/src/img/title.png" alt="rick&morty-title">
+  </header>
+  <nav class="nav">
+    <section id="navContent" class="nav__list none">
+      <ul id="sidebar">
+      </ul>
+      <button class="pagination__next">next</button>
+      <button class="pagination__back">back</button>
+    </section>
+    <button id="navController" class="nav__button bx bxs-chevron-right"></button>
+  </nav>
   </div>
   <footer>
     <img src="https://media3.giphy.com/media/i2tLw5ZyikSFdkeGHT/giphy.gif" alt="portal" class="portal none">

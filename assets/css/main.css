@@ -50,6 +50,8 @@ footer{
   font-size: 3rem;
 }
 .nav__list{
+  overflow: hidden;
+  overflow-Y: auto;
   border-top: 10px solid #34474F;
   border-bottom: 10px solid #34474F;
   border-top-right-radius: 3rem;
