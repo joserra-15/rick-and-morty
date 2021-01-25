@@ -19,7 +19,9 @@ export const actions = {
           const newPromise = axios.get(element);
           charactersPromise.push(newPromise);
         });
-        axios.all(charactersPromise).then(character => {
+        axios.all(charactersPromise).then(element => {
+          const character = [];
+          element.forEach(({ data }) => character.push(data));
           data.characters = character;
           dispatcher.emit('card-character-episode', data);
         });
@@ -35,6 +37,13 @@ export const actions = {
       axios
         .get(store.state.sidebar.info.prev)
         .then(({ data }) => dispatcher.emit('prev_page', data));
+    }
+  },
+  showCharacterInfoWithAllEpisodes: e => {
+    if (e.target.getAttribute('data-location')) {
+      console.log(e);
+    } else if (e.target.getAttribute('data-character')) {
+      console.log(e);
     }
   },
 };

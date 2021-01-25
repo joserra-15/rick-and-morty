@@ -1,10 +1,11 @@
 import { actions } from '../actions/actions.js';
 import { createFragmentList } from '../helpers/helpers.js';
+import { charactersCard } from '../views/Components/CharactersCard.js';
 import { episodieList } from '../views/Components/EpisodieList.js';
 import { renderView } from '../views/renderViews.js';
 
 export const store = {
-  state: { sidebar: { info: {}, listItem: [] }, status: 'home' },
+  state: { sidebar: { info: {}, listItem: [] }, cardCharacterEpisode: {} },
   onAction: {
     showOrHideSideBar: function (action) {
       if (action.name === 'sideBar_show_or_hide') {
@@ -48,7 +49,6 @@ export const store = {
         const { results, info } = action.payload;
         store.state.sidebar.info = info;
         store.state.sidebar.listItem = results;
-        console.log(createFragmentList(results, episodieList.template));
         renderView(
           createFragmentList(results, episodieList.template),
           '#sidebar',
@@ -68,7 +68,28 @@ export const store = {
     },
     cardCharacterEpisode: function (action) {
       if (action.name === 'card-character-episode') {
-        console.log(action.payload);
+        document.getElementById('nav').classList.toggle('none');
+        document.getElementById('navController').classList.toggle('bx-x');
+        document
+          .getElementById('navController')
+          .classList.toggle('bxs-chevron-right');
+        store.state.cardCharacterEpisode = action.payload;
+        console.log(action.payload.characters);
+        renderView(
+          createFragmentList(
+            action.payload.characters,
+            charactersCard.template,
+          ),
+          '#mainContent',
+        );
+        document
+          .querySelectorAll('.item__info')
+          .forEach(button =>
+            button.addEventListener(
+              'click',
+              actions.showCharacterInfoWithAllEpisodes,
+            ),
+          );
       }
     },
   },
