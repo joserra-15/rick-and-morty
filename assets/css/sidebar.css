@@ -4,7 +4,9 @@
   width: 90%;
   display: flex;
   align-items: flex-start;
-  position: absolute;
+  position: fixed;
+  background: rgba(8, 8, 8, 0.3);
+  z-index: 10;
 }
 .nav__buttons{
   display: flex;
@@ -20,19 +22,11 @@
   font-weight: bold;
   transform: rotate(90deg);
   margin: 3rem 0;
+  cursor: pointer;
 }
-.button-nav__controller{
-  background-color: transparent;
-  position: fixed;
-  top: 90%;
-  left: 80%;
-  border: none;
-  color: #FAFAE9;
-  height: auto;
-  font-size: 3rem;
-  z-index: 20;
+.nav-buttons__pagination:hover{
+  text-decoration: underline;
 }
-
 
 .nav__list{
   overflow-Y: auto;

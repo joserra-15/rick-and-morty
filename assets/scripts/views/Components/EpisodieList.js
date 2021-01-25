@@ -1,9 +1,8 @@
-import { actions } from '../../actions/actions.js';
 
 export const episodieList = {
-  template: ({ name, episode, id }) => `
+  template: ({ name, episode, url }) => `
   <li>
-    <button class="list-item" data-id='${id}'>
+    <button class="list-item" data-episode='${url}'>
       <h2>${name}</h2>
       <h3>${episode}</h3>
     </button>

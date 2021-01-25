@@ -13,10 +13,34 @@ export const store = {
         action.payload.classList.toggle('bxs-chevron-right');
       }
     },
-    decrementer: function (action) {
-      if (action.name === 'decrement') {
-        store.state.value--;
-        $('#value').text(store.state.value);
+    nextPage: function (action) {
+      if (action.name === 'next_page') {
+        const { results, info } = action.payload;
+        if (!store.state.sidebar.info.prev)
+          document.getElementById('buttonBack').classList.toggle('none');
+        if (!info.next)
+          document.getElementById('buttonNext').classList.toggle('none');
+        store.state.sidebar.info = info;
+        store.state.sidebar.listItem = results;
+        renderView(
+          createFragmentList(results, episodieList.template),
+          '#sidebar',
+        );
+      }
+    },
+    backPage: function (action) {
+      if (action.name === 'prev_page') {
+        const { results, info } = action.payload;
+        if (!info.prev)
+          document.getElementById('buttonBack').classList.toggle('none');
+        if (!store.state.sidebar.info.next)
+          document.getElementById('buttonNext').classList.toggle('none');
+        store.state.sidebar.info = info;
+        store.state.sidebar.listItem = results;
+        renderView(
+          createFragmentList(results, episodieList.template),
+          '#sidebar',
+        );
       }
     },
     init: function (action) {
@@ -35,6 +59,16 @@ export const store = {
         document
           .getElementById('sidebar')
           .addEventListener('click', actions.showCharacters);
+        document
+          .querySelectorAll('.nav-buttons__pagination')
+          .forEach(button =>
+            button.addEventListener('click', actions.nextOrBackPagination),
+          );
+      }
+    },
+    cardCharacterEpisode: function (action) {
+      if (action.name === 'card-character-episode') {
+        console.log(action.payload);
       }
     },
   },
