@@ -1,0 +1,56 @@
+
+.nav{
+  height: 100%;
+  width: 90%;
+  display: flex;
+  align-items: flex-start;
+  position: absolute;
+}
+.nav__buttons{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.nav-buttons__pagination{
+  background-color: transparent;
+  border: none;
+  color: #FAFAE9;
+  width: 6rem;
+  font-size: 2rem;
+  font-weight: bold;
+  transform: rotate(90deg);
+  margin: 3rem 0;
+}
+.button-nav__controller{
+  background-color: transparent;
+  position: fixed;
+  top: 90%;
+  left: 80%;
+  border: none;
+  color: #FAFAE9;
+  height: auto;
+  font-size: 3rem;
+  z-index: 20;
+}
+
+
+.nav__list{
+  overflow-Y: auto;
+  height: 90%;
+  padding-right: 3rem;
+}
+
+.sidebar-list{
+  list-style: none;
+  color: #FAFAE9;
+}
+.sidebar-list button{
+  all: unset;
+  cursor: pointer;
+}
+.sidebar-list button:hover{
+  border-bottom: 1px solid #FAFAE9;
+}
+.sidebar-list button:active{
+  transform: scale(0.9);
+}

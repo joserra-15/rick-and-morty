@@ -8,7 +8,7 @@ export const store = {
   onAction: {
     showOrHideSideBar: function (action) {
       if (action.name === 'sideBar_show_or_hide') {
-        document.getElementById('navContent').classList.toggle('none');
+        document.getElementById('nav').classList.toggle('none');
         action.payload.classList.toggle('bx-x');
         action.payload.classList.toggle('bxs-chevron-right');
       }
@@ -32,7 +32,9 @@ export const store = {
         document
           .getElementById('navController')
           .addEventListener('click', actions.showOrHideSideBar);
-        episodieList.listen('add');
+        document
+          .getElementById('sidebar')
+          .addEventListener('click', actions.showCharacters);
       }
     },
   },

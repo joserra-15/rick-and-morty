@@ -11,19 +11,22 @@
 </head>
 <body>
   <canvas id="canvas"></canvas>
-  <div id="root" class="root">
-    <header class="header">
-      <img class="header__title" src="/assets/src/img/title.png" alt="rick&morty-title">
+  <header class="header">
+    <button id="navController" class="button-nav__controller bx bxs-chevron-right"></button>
+    <img class="header__title" src="/assets/src/img/title.png" alt="rick&morty-title">
   </header>
-  <nav class="nav">
-    <section id="navContent" class="nav__list none">
-      <ul id="sidebar">
+  <div id="root" class="root">
+  <nav id="nav" class="nav none">
+    <section id="navContent" class="nav__list">
+      <ul id="sidebar" class="sidebar-list">
       </ul>
-      <button class="pagination__next">next</button>
-      <button class="pagination__back">back</button>
     </section>
-    <button id="navController" class="nav__button bx bxs-chevron-right"></button>
+    <section class="nav__buttons">
+      <button id="buttonNext"class="nav-buttons__pagination">next</button>
+      <button id="buttonBack" class="nav-buttons__pagination none">back</button>
+    </section>
   </nav>
+  <main id="main" class="main"></main>
   </div>
   <footer>
     <img src="https://media3.giphy.com/media/i2tLw5ZyikSFdkeGHT/giphy.gif" alt="portal" class="portal none">
