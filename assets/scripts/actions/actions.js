@@ -12,7 +12,7 @@ export const actions = {
     dispatcher.emit('sideBar_show_or_hide', e.target);
   },
   showCharacters: e => {
-    const url = e.target.closest('button').getAttribute('data-episode');
+    const url = e.target.getAttribute('data-episode');
     if (url) {
       actions.getDataAndCallDispatcher(
         'card-episode-character',
