@@ -5,7 +5,12 @@ import { episodieList } from '../views/Components/EpisodieList.js';
 import { renderView } from '../views/renderViews.js';
 
 export const store = {
-  state: { sidebar: { info: {}, listItem: [] }, cardCharacterEpisode: {} },
+  state: {
+    sidebar: { info: {}, listItem: [] },
+    cardCharacterEpisode: {},
+    cardCharacterLocation: {},
+    cardEpisodeCharacter: {},
+  },
   onAction: {
     showOrHideSideBar: function (action) {
       if (action.name === 'sideBar_show_or_hide') {
@@ -64,26 +69,8 @@ export const store = {
           .forEach(button =>
             button.addEventListener('click', actions.nextOrBackPagination),
           );
-      }
-    },
-    cardCharacterEpisode: function (action) {
-      if (action.name === 'card-character-episode') {
-        document.getElementById('nav').classList.toggle('none');
-        document.getElementById('navController').classList.toggle('bx-x');
         document
-          .getElementById('navController')
-          .classList.toggle('bxs-chevron-right');
-        store.state.cardCharacterEpisode = action.payload;
-        console.log(action.payload.characters);
-        renderView(
-          createFragmentList(
-            action.payload.characters,
-            charactersCard.template,
-          ),
-          '#mainContent',
-        );
-        document
-          .querySelectorAll('.item__info')
+          .querySelectorAll('.main')
           .forEach(button =>
             button.addEventListener(
               'click',
@@ -92,8 +79,63 @@ export const store = {
           );
       }
     },
-  },
-  getState: function () {
-    return Object.assign({}, this.state);
+    cardEpisodeCharacter: function (action) {
+      if (action.name === 'card-episode-character') {
+        if (!document.getElementById('nav').classList.contains('none')) {
+          document.getElementById('nav').classList.toggle('none');
+          document.getElementById('navController').classList.toggle('bx-x');
+          document
+            .getElementById('navController')
+            .classList.toggle('bxs-chevron-right');
+        }
+        store.state.cardEpisodeCharacter = action.payload;
+        renderView(
+          createFragmentList(
+            [action.payload],
+            charactersCard.templateInfoEpisode,
+          ),
+          '#mainInfo',
+        );
+        renderView(
+          createFragmentList(
+            action.payload.characters,
+            charactersCard.template,
+          ),
+          '#mainContent',
+        );
+      }
+    },
+    cardCharacterLocation: function (action) {
+      if (action.name === 'card-character-location') {
+        store.state.cardCharacterLocation = action.payload;
+        renderView(
+          createFragmentList(
+            [action.payload],
+            charactersCard.templateInfoLocation,
+          ),
+          '#mainInfo',
+        );
+        renderView(
+          createFragmentList(action.payload.residents, charactersCard.template),
+          '#mainContent',
+        );
+      }
+    },
+    cardCharacterEpisode: function (action) {
+      if (action.name === 'card-character-episode') {
+        store.state.cardCharacterEpisode = action.payload;
+        renderView(
+          createFragmentList([action.payload], charactersCard.template),
+          '#mainInfo',
+        );
+        renderView(
+          createFragmentList(
+            action.payload.episode,
+            charactersCard.templateContentEpisode,
+          ),
+          '#mainContent',
+        );
+      }
+    },
   },
 };

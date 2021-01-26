@@ -64,3 +64,20 @@ export const backgroundRicknillo = () => {
     );
   }, 1000 / 20);
 };
+
+export const transition = time => {
+  const portal = document.querySelector('.container-portal');
+  if (time === 'start') {
+    portal.classList.toggle('none');
+    portal.animate(
+      [
+        {
+          opacity: 1,
+        },
+      ],
+      { duration: 100, delay: 100, fill: 'forwards' },
+    );
+  } else {
+    portal.classList.toggle('none');
+  }
+};
