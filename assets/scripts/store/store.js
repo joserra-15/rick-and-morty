@@ -1,6 +1,6 @@
 import { actions } from '../actions/actions.js';
-import { createFragmentList } from '../helpers/helpers.js';
-import { charactersCard } from '../views/Components/CharactersCard.js';
+import { createFragmentList, renderMain } from '../helpers/helpers.js';
+import { animateSidebar } from '../views/animation.js';
 import { episodieList } from '../views/Components/EpisodieList.js';
 import { renderView } from '../views/renderViews.js';
 
@@ -14,9 +14,7 @@ export const store = {
   onAction: {
     showOrHideSideBar: function (action) {
       if (action.name === 'sideBar_show_or_hide') {
-        document.getElementById('nav').classList.toggle('none');
-        action.payload.classList.toggle('bx-x');
-        action.payload.classList.toggle('bxs-chevron-right');
+        animateSidebar();
       }
     },
     nextPage: function (action) {
@@ -82,58 +80,36 @@ export const store = {
     cardEpisodeCharacter: function (action) {
       if (action.name === 'card-episode-character') {
         if (!document.getElementById('nav').classList.contains('none')) {
-          document.getElementById('nav').classList.toggle('none');
-          document.getElementById('navController').classList.toggle('bx-x');
-          document
-            .getElementById('navController')
-            .classList.toggle('bxs-chevron-right');
+          animateSidebar();
         }
         store.state.cardEpisodeCharacter = action.payload;
-        renderView(
-          createFragmentList(
-            [action.payload],
-            charactersCard.templateInfoEpisode,
-          ),
-          '#mainInfo',
-        );
-        renderView(
-          createFragmentList(
-            action.payload.characters,
-            charactersCard.template,
-          ),
-          '#mainContent',
+        renderMain(
+          action.payload,
+          'templateInfoEpisode',
+          action.payload.characters,
+          'template',
         );
       }
     },
     cardCharacterLocation: function (action) {
       if (action.name === 'card-character-location') {
         store.state.cardCharacterLocation = action.payload;
-        renderView(
-          createFragmentList(
-            [action.payload],
-            charactersCard.templateInfoLocation,
-          ),
-          '#mainInfo',
-        );
-        renderView(
-          createFragmentList(action.payload.residents, charactersCard.template),
-          '#mainContent',
+        renderMain(
+          action.payload,
+          'templateInfoLocation',
+          action.payload.residents,
+          'template',
         );
       }
     },
     cardCharacterEpisode: function (action) {
       if (action.name === 'card-character-episode') {
         store.state.cardCharacterEpisode = action.payload;
-        renderView(
-          createFragmentList([action.payload], charactersCard.template),
-          '#mainInfo',
-        );
-        renderView(
-          createFragmentList(
-            action.payload.episode,
-            charactersCard.templateContentEpisode,
-          ),
-          '#mainContent',
+        renderMain(
+          action.payload,
+          'template',
+          action.payload.episode,
+          'templateContentEpisode',
         );
       }
     },

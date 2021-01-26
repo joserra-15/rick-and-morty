@@ -14,21 +14,11 @@ export const actions = {
   showCharacters: e => {
     const url = e.target.closest('button').getAttribute('data-episode');
     if (url) {
-      transition('start');
-      axios.get(url).then(({ data }) => {
-        const charactersPromise = [];
-        data.characters.forEach(element => {
-          const newPromise = axios.get(element);
-          charactersPromise.push(newPromise);
-        });
-        axios.all(charactersPromise).then(element => {
-          const character = [];
-          element.forEach(({ data }) => character.push(data));
-          data.characters = character;
-          transition('stop');
-          dispatcher.emit('card-episode-character', data);
-        });
-      });
+      actions.getDataAndCallDispatcher(
+        'card-episode-character',
+        'characters',
+        url,
+      );
     }
   },
   nextOrBackPagination: e => {
@@ -47,39 +37,40 @@ export const actions = {
     const urlCharacter = e.target.getAttribute('data-character');
     const urlEpisode = e.target.getAttribute('data-episode');
     if (urlLocation) {
-      transition('start');
-      axios.get(urlLocation).then(({ data }) => {
-        const charactersPromise = [];
-        data.residents.forEach(element => {
-          const newPromise = axios.get(element);
-          charactersPromise.push(newPromise);
-        });
-        axios.all(charactersPromise).then(element => {
-          const character = [];
-          element.forEach(({ data }) => character.push(data));
-          data.residents = character;
-          transition('stop');
-          dispatcher.emit('card-character-location', data);
-        });
-      });
+      actions.getDataAndCallDispatcher(
+        'card-character-location',
+        'residents',
+        urlLocation,
+      );
     } else if (urlCharacter) {
-      transition('start');
-      axios.get(urlCharacter).then(({ data }) => {
-        const episodePromise = [];
-        data.episode.forEach(element => {
-          const newPromise = axios.get(element);
-          episodePromise.push(newPromise);
-        });
-        axios.all(episodePromise).then(element => {
-          const character = [];
-          element.forEach(({ data }) => character.push(data));
-          data.episode = character;
-          transition('stop');
-          dispatcher.emit('card-character-episode', data);
-        });
-      });
+      actions.getDataAndCallDispatcher(
+        'card-character-episode',
+        'episode',
+        urlCharacter,
+      );
     } else if (urlEpisode) {
-      actions.showCharacters(e);
+      actions.getDataAndCallDispatcher(
+        'card-episode-character',
+        'characters',
+        urlEpisode,
+      );
     }
+  },
+  getDataAndCallDispatcher: (actionType, elementType, url) => {
+    transition('start');
+    axios.get(url).then(({ data }) => {
+      const promises = [];
+      data[elementType].forEach(element => {
+        const newPromise = axios.get(element);
+        promises.push(newPromise);
+      });
+      axios.all(promises).then(element => {
+        const allElements = [];
+        element.forEach(({ data }) => allElements.push(data));
+        data[elementType] = allElements;
+        transition('stop');
+        dispatcher.emit(actionType, data);
+      });
+    });
   },
 };

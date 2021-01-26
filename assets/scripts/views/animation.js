@@ -81,3 +81,33 @@ export const transition = time => {
     portal.classList.toggle('none');
   }
 };
+
+export const animateSidebar = () => {
+  const nav = document.getElementById('nav');
+  const navController = document.getElementById('navController');
+  if (nav.classList.contains('none')) {
+    nav.classList.toggle('none');
+    nav.animate(
+      { opacity: 1 },
+      {
+        duration: 500,
+        fill: 'forwards',
+      },
+    );
+    navController.classList.toggle('bx-x');
+    navController.classList.toggle('bxs-chevron-right');
+  } else {
+    nav.animate(
+      { opacity: 0 },
+      {
+        duration: 500,
+        fill: 'forwards',
+      },
+    );
+    setTimeout(() => {
+      nav.classList.toggle('none');
+      navController.classList.toggle('bx-x');
+      navController.classList.toggle('bxs-chevron-right');
+    }, 400);
+  }
+};
