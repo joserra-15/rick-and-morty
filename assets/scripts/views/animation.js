@@ -43,6 +43,36 @@ export const backgroundRicknillo = () => {
       ),
     );
   }
+  const catGravitySprite = new Image();
+  catGravitySprite.src = './assets/src/img/catgravity.png';
+  function drawCatGravity(x, y, degrees) {
+    ctx.translate(
+      x + catGravitySprite.width / 2,
+      y + catGravitySprite.height / 2,
+    );
+    ctx.rotate((degrees * Math.PI) / 180);
+    ctx.drawImage(
+      catGravitySprite,
+      0,
+      0,
+      catGravitySprite.width,
+      catGravitySprite.height,
+      -catGravitySprite.width / 2,
+      -catGravitySprite.height / 2,
+      catGravitySprite.width,
+      catGravitySprite.height,
+    );
+    ctx.rotate((-degrees * Math.PI) / 180);
+    ctx.translate(
+      -x - catGravitySprite.width / 2,
+      -y - catGravitySprite.height / 2,
+    );
+  }
+  const catGravity = {
+    positionX: cWidth * Math.random(),
+    positionY: -100,
+    degrees: 0,
+  };
   setInterval(() => {
     // Init And Clean Canvas
     canvas.width = cWidth;
@@ -64,7 +94,11 @@ export const backgroundRicknillo = () => {
     rickinilloSprite.src = './assets/src/img/ricknillo.png';
     potatoSprite.src = './assets/src/img/potato.png';
     cateteSprite.src = './assets/src/img/catete.png';
-
+    drawCatGravity(
+      catGravity.positionX,
+      catGravity.positionY,
+      catGravity.degrees,
+    );
     //Print Images
     if (Math.random() < 0.01) {
       if (Math.random() < 0.3) {
@@ -119,6 +153,14 @@ export const backgroundRicknillo = () => {
     allCharacters = allCharacters.filter(
       character => character.positonY < cHeight,
     );
+    if (catGravity.positionY > cHeight + 100) {
+      catGravity.positionY = -100;
+      catGravity.positionX = cWidth * Math.random();
+    } else {
+      catGravity.positionY += 1;
+      catGravity.positionx += 1;
+    }
+    catGravity.degrees = (catGravity.degrees + 1) % 360;
   }, 1000 / 20);
 };
 
