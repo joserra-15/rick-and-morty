@@ -29,10 +29,11 @@ export const backgroundRicknillo = () => {
     );
   }
   setInterval(() => {
+    // Init And Clean Canvas
     canvas.width = cWidth;
     canvas.height = cHeight;
-    const rickinilloSprite = new Image();
-    rickinilloSprite.src = './assets/src/img/ricknillo.png';
+
+    // Print All Stars
     ctx.fillRect(0, 0, cWidth, cHeight);
     starsArray.forEach(star => {
       ctx.beginPath();
@@ -40,6 +41,12 @@ export const backgroundRicknillo = () => {
       ctx.fillStyle = 'white';
       ctx.fill();
     });
+
+    //Loaded Images
+    const rickinilloSprite = new Image();
+    rickinilloSprite.src = './assets/src/img/ricknillo.png';
+
+    //Print Images
     if (Math.random() < 0.01) {
       allRickinillo.push(new Ricknillo((cWidth - 133) * Math.random()));
     }
