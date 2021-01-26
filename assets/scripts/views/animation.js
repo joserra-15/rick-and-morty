@@ -5,6 +5,21 @@ export const backgroundRicknillo = () => {
     constructor(x) {
       this.positonX = x;
       this.positonY = -200;
+      this.type = 'ricknillo';
+    }
+  }
+  class Potato {
+    constructor(x) {
+      this.positonX = x;
+      this.positonY = -200;
+      this.type = 'potato';
+    }
+  }
+  class Catete {
+    constructor(x) {
+      this.positonX = x;
+      this.positonY = -200;
+      this.type = 'catete';
     }
   }
   class Star {
@@ -15,7 +30,7 @@ export const backgroundRicknillo = () => {
     }
   }
 
-  let allRickinillo = [];
+  let allCharacters = [];
   const starsArray = [];
   const cWidth = window.innerWidth;
   const cHeight = window.innerHeight;
@@ -44,30 +59,65 @@ export const backgroundRicknillo = () => {
 
     //Loaded Images
     const rickinilloSprite = new Image();
+    const potatoSprite = new Image();
+    const cateteSprite = new Image();
     rickinilloSprite.src = './assets/src/img/ricknillo.png';
+    potatoSprite.src = './assets/src/img/potato.png';
+    cateteSprite.src = './assets/src/img/catete.png';
 
     //Print Images
     if (Math.random() < 0.01) {
-      allRickinillo.push(new Ricknillo((cWidth - 133) * Math.random()));
+      if (Math.random() < 0.3) {
+        Math.random() < 0.5
+          ? allCharacters.push(new Potato((cWidth - 133) * Math.random()))
+          : allCharacters.push(new Catete((cWidth - 133) * Math.random()));
+      }
+      allCharacters.push(new Ricknillo((cWidth - 133) * Math.random()));
     }
-    if (allRickinillo.length && allRickinillo.length < 15) {
-      allRickinillo.forEach(ricknillo =>
-        ctx.drawImage(
-          rickinilloSprite,
-          0,
-          0,
-          665,
-          727,
-          ricknillo.positonX,
-          ricknillo.positonY,
-          100,
-          109,
-        ),
-      );
+    if (allCharacters.length && allCharacters.length < 15) {
+      allCharacters.forEach(character => {
+        if (character.type === 'ricknillo') {
+          ctx.drawImage(
+            rickinilloSprite,
+            0,
+            0,
+            665,
+            727,
+            character.positonX,
+            character.positonY,
+            100,
+            109,
+          );
+        } else if (character.type === 'potato') {
+          ctx.drawImage(
+            potatoSprite,
+            0,
+            0,
+            512,
+            512,
+            character.positonX,
+            character.positonY,
+            100,
+            100,
+          );
+        } else if (character.type === 'catete') {
+          ctx.drawImage(
+            cateteSprite,
+            0,
+            0,
+            512,
+            512,
+            character.positonX,
+            character.positonY,
+            100,
+            100,
+          );
+        }
+      });
     }
-    allRickinillo.forEach(ricknillo => (ricknillo.positonY += 5));
-    allRickinillo = allRickinillo.filter(
-      ricknillo => ricknillo.positonY < cHeight,
+    allCharacters.forEach(character => (character.positonY += 5));
+    allCharacters = allCharacters.filter(
+      character => character.positonY < cHeight,
     );
   }, 1000 / 20);
 };
